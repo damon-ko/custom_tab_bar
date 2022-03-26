@@ -1,3 +1,4 @@
+import 'package:custom_tab_bar/custom_tab_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,7 +29,14 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  late TabController _tabController;
+  late TabBar bar;
+  @override
+  void initState() {
+    _tabController = TabController(length: 5, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +44,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'Hello World',
-            ),
-          ],
-        ),
+      bottomNavigationBar: CustomTabBar(
+        tabController: _tabController,
+        backgroundColor: Colors.blue,
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const [
+          Text("A"),
+          Text("B"),
+          Text("C"),
+          Text("D"),
+          Text("E"),
+        ],
       ),
     );
   }
